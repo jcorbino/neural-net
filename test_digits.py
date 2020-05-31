@@ -9,8 +9,7 @@ if __name__ == '__main__':
     training_data = training_data[:, 1:]
     training_data /= 255
 
-    # Construct the network
-    #                           I                H         O
+    # Construct the network     I                             H                     O
     nn = NeuralNetwork(training_data.shape[1], [int(training_data.shape[1]/4)], output_len)
 
     # Train the network
@@ -26,4 +25,4 @@ if __name__ == '__main__':
     # Test the network
     predicted = np.argmax(nn.predict(testing_data), axis = 1)
     accu = np.where(labels != predicted, 0, 1)
-    print('{:.2f}'.format(accu.sum()/accu.shape[0]*100)+'%')
+    print('Accuracy {:.2f}'.format(accu.sum()/accu.shape[0]*100)+'%')
