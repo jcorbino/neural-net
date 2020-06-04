@@ -49,15 +49,21 @@ class NeuralNetwork:
             # Update biases
             self.biases[i] += delta.sum(axis = 0)
 
-    def train(self, inputs, outputs, activations = [], epochs = 100, lr = 0.001):
+    def train(self, inputs, outputs, activations = [], epochs = 100, lr = 0.001, batch_size = 0):
         if not activations:
             self.activations = ['relu']*len(self.weights)
         else:
             self.activations = activations
+        if not batch_size:
+            # Default: Gradient descent (full vectorization)
+            batch_size = inputs.shape[0]
         for _ in range(epochs):
             print('Epoch', _)
-            self.__feedforward(inputs)
-            self.__backprop(outputs, lr)
+            # Shuffle training data (recommended)
+            idx = np.random.permutation(inputs.shape[0])
+            for i in range(0, inputs.shape[0], batch_size):
+                self.__feedforward(inputs[idx][i:i + batch_size])
+                self.__backprop(outputs[idx][i:i + batch_size], lr)
 
     def predict(self, inputs):
         self.__feedforward(inputs)
