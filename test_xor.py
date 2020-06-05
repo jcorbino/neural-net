@@ -1,6 +1,6 @@
 from nn import *
 
-np.set_printoptions(formatter = {'float': '{:0.2f}'.format})
+np.set_printoptions(formatter = {'float': '{:.2f}'.format})
 
 if __name__ == '__main__':
     # Input
