@@ -1,5 +1,15 @@
 import numpy as np
 
+def linear_regression(X, y, Q = None):
+    bias = np.ones((X.shape[0], 1))
+    X = np.append(bias, X, axis = 1)
+    # Normal equation
+    theta = np.linalg.inv(X.T @ X) @ X.T @ y
+    if Q is not None:
+        return theta[1]*Q + theta[0]
+    else:
+        return theta[1]*X[:, 1:] + theta[0]
+
 # Initializers
 def rand(nrows, ncols, which):
     return {
