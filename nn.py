@@ -1,5 +1,16 @@
 import numpy as np
 
+# Equivalent to calling SciPy's signal.correlate2d(image, filter, mode = 'same')
+def conv2d(image, filter, mode = 'same', pad_val = 0):
+    if mode == 'same':
+        image = np.pad(image, 1, constant_values = pad_val)
+    # shape = (shape of filter, shape of output)
+    shape = filter.shape + tuple(np.subtract(image.shape, filter.shape) + 1)
+    # Subarrays formed by moving the "window" row-wise by a stride of 1
+    sub = np.lib.stride_tricks.as_strided(image, shape, image.strides*2)
+    return np.einsum('ij, ijkl -> kl', filter, sub)
+
+# Use NumPy's polyfit function instead
 def linear_regression(X, y, Q = None):
     bias = np.ones((X.shape[0], 1))
     X = np.append(bias, X, axis = 1)
