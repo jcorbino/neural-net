@@ -3,7 +3,7 @@ import numpy as np
 # Equivalent to calling SciPy's signal.correlate2d(image, filter, mode = 'same')
 def conv2d(image, filter, mode = 'same', pad_val = 0):
     if mode == 'same':
-        image = np.pad(image, 1, constant_values = pad_val)
+        image = np.pad(image, tuple(np.divide(filter.shape, 2).astype(int)), constant_values = pad_val)
     # shape = (shape of filter, shape of output)
     shape = filter.shape + tuple(np.subtract(image.shape, filter.shape) + 1)
     # Subarrays formed by moving the "window" row-wise by a stride of 1
