@@ -45,6 +45,7 @@ def activation_derivative(x, which):
     }[which]
 
 class NeuralNetwork:
+    # Constructor only initializes weights and biases, anything else can be provided at training time
     def __init__(self, input_len, hiddens_len, output_len, initializer = 'uniform'):
         self.weights = [rand(input_len, hiddens_len[0], initializer)*pow(input_len, -0.5)]
         self.biases = [np.zeros((1, hiddens_len[0]))]
