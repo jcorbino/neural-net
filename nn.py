@@ -10,6 +10,17 @@ def conv2d(image, filter, mode = 'same', pad_val = 0):
     sub = np.lib.stride_tricks.as_strided(image, shape, image.strides*2)
     return np.einsum('ij, ijkl -> kl', filter, sub)
 
+# Max or mean 2D pooling
+def pool2d(image, shape, mode = 'max'):
+    output = np.empty(np.divide(image.shape, shape).astype(int) + 1)
+    for i in range(0, image.shape[0], shape[0]):
+        for j in range(0, image.shape[1], shape[1]):
+            if mode == 'max':
+                output[int(i/shape[0]), int(j/shape[1])] = np.max(image[i:i + shape[0], j:j + shape[1]])
+            else:
+                output[int(i/shape[0]), int(j/shape[1])] = np.mean(image[i:i + shape[0], j:j + shape[1]])
+    return output
+
 # Use NumPy's polyfit function instead
 def linear_regression(X, y, Q = None):
     bias = np.ones((X.shape[0], 1))
