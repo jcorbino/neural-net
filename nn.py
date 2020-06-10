@@ -51,7 +51,7 @@ def activation(x, which):
 
 def tanh(x):
     t = np.exp(2*x)
-    (t - 1)/(t + 1)
+    return (t - 1)/(t + 1)
 
 def softmax(x):
     t = np.exp(x)
