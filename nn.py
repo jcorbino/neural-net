@@ -44,15 +44,25 @@ def rand(nrows, ncols, which):
 def activation(x, which):
     return {
         'sigmoid' : 1/(1 + np.exp(-x)),
-        'tanh' : (np.exp(2*x) - 1)/(np.exp(2*x) + 1),
-        'relu' : np.maximum(0, x)
+        'tanh' : tanh(x),
+        'relu' : np.maximum(0, x),
+        'softmax' : softmax(x)
     }[which]
+
+def tanh(x):
+    t = np.exp(2*x)
+    (t - 1)/(t + 1)
+
+def softmax(x):
+    t = np.exp(x)
+    return t/t.sum(axis = 1, keepdims = True)
 
 def activation_derivative(x, which):
     return {
         'sigmoid' : x*(1 - x),
         'tanh' : 1 - np.square(x),
-        'relu' : np.greater(x, 0).astype(int)
+        'relu' : np.greater(x, 0).astype(int),
+        'softmax' : 1
     }[which]
 
 class NeuralNetwork:
