@@ -10,6 +10,5 @@ plt.plot(x, linear_regression(x, y), color = 'blue')
 plt.show()
 
 # Or better use NumPy's polyfit + polyval functions
-# deg = 1
-# coeffs = np.polyfit(x[:, 0], y, deg)
+# coeffs = np.polyfit(x[:, 0], y, 1)
 # y = np.polyval(coeffs, x)
